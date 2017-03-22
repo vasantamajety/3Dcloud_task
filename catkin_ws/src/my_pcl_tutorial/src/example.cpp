@@ -13,25 +13,20 @@ pcl::visualization::CloudViewer viewer("Cloud Viewer");
 
 void cloud_callback (const sensor_msgs::PointCloud2ConstPtr& cloud_msg)
 {
-// Container for original & filtered data
 pcl::PCLPointCloud2 cloud1;
-pcl_conversions::toPCL(*cloud_msg, cloud1);
-pcl::PointCloud<pcl::PointXYZ>::Ptr cloudconverted(new pcl::PointCloud<pcl::PointXYZ>);
-pcl::fromPCLPointCloud2(cloud1,*cloudconverted);
-//pcl::PCLPointCloud2 cloud_filtered;
-// Convert to PCL data type
 
- // Perform the actual filtering
-/*pcl::VoxelGrid<pcl::PCLPointCloud2> sor;
-sor.setInputCloud (cloudPtr);
-sor.setLeafSize (0.1, 0.1, 0.1);
-sor.filter (cloud_filtered);*/
-// Convert to ROS data type
-/*sensor_msgs::PointCloud2 output;
-pcl_conversions::fromPCL(cloud_filtered, output);*/
+//void 	toPCL (const sensor_msgs::PointCloud2 &pc2, pcl::PCLPointCloud2 &pcl_pc2)
+pcl_conversions::toPCL(*cloud_msg, cloud1);
+
+//Creates two pcl::PointCloud<pcl::PointXYZ> boost shared pointers and initializes them
+//The type of each point is set to PointXYZ
+pcl::PointCloud<pcl::PointXYZ>::Ptr cloudconverted(new pcl::PointCloud<pcl::PointXYZ>);
+
+//fromPCLPointCloud2 (const pcl::PCLPointCloud2& msg, pcl::PointCloud<PointT>& cloud)
+//brief Convert a PCLPointCloud2 binary data blob into a pcl::PointCloud<T> object
+pcl::fromPCLPointCloud2(cloud1,*cloudconverted);
+
 viewer.showCloud(cloudconverted);
-// Publish the data
-//pub.publish (output);
 }
 
 
